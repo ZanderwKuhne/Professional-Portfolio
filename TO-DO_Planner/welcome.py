@@ -35,10 +35,10 @@ def print_welcome():
         match choice:
             case "login":
                 choosing = False
-                login()
+                return login()
             case "register":
                 choosing = False
-                register()
+                return register()
             case "quit":
                 choosing = False
     return choosing
@@ -75,28 +75,35 @@ def login():
                 case "retry":
                     continue
                 case "back":
-                    return
+                    return "welcome"
                 case _:
                     print("Please enter a valid option")
-    # User verified, pass the correct information to the user_page function
-    user_page(username, check_user["id"])
-    return
+        # User verified, pass the correct information to the user_page function
+        return user_page(username, check_user["id"])
 
 
 # This is the new user registration page function, users can navigate here from the welcome page and move to the user_page once registered
 def register():
     clear_console()
     while True:
-        username = input("Enter new username:\n")
+        username = input(
+            "Enter new username:\nUsername length minimum of 4 characters\n"
+        )
         if check_user_reg(username):
-            password = input("Enter new password:\n")
+            password = input(
+                "Enter new password:\nPassword length minimum of 6 characters\n"
+            )
+            if not username or not password:
+                print("Username or password cannot be empty.")
+                continue
+            if len(username) < 5 or len(password) < 6:
+                print("Username or password too short")
             user_data = create_user(username, password)
             input("""
             User successfully registered!
             Press Enter to continue
             """)
-            user_page(username, user_data["id"])
-            return
+            return user_page(username, user_data["id"])
         else:
             print("Username already exists!")
             response = input("""
@@ -109,7 +116,7 @@ def register():
                 case "retry":
                     continue
                 case "back":
-                    return
+                    return "welcome"
                 case _:
                     print("Please enter a valid option")
 
@@ -126,7 +133,8 @@ def user_page(username: str, user_id: int):
         if not user_goal_data["data"]:
             print(f"\n{user_goal_data['message']}")
         else:
-            print(f"\n{user_goal_data['data']}")
+            for goal in user_goal_data["data"]:
+                print(goal)
         choice = input("""
         What would you like to do?
         Add new goal: type 'add'
@@ -191,7 +199,7 @@ def user_page(username: str, user_id: int):
                     continue
 
             case "logout":
-                return
+                return "welcome"
 
             case _:
-                print("Please input a valid option")
+                print("Please enter a valid option")

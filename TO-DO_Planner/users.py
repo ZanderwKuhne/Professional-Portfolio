@@ -207,13 +207,12 @@ def update_goal(user_id: int, data_id: int):
 
 # Store input password as hashed string using bcrypt
 def pass_hash(password: str):
-    hashed = bcrypt.hashpw(password.encode(
-        "utf-8"), bcrypt.gensalt(14)).decode("utf-8")
+    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(14)).decode("utf-8")
     return hashed
 
 
 # Check if stored hash password matches user input password for verification
 def hash_pass_check(hash_pw: str, input_pw: str):
-    if bcrypt.checkpw(hash_pw.encode("utf-8"), input_pw.encode("utf-8")):
+    if bcrypt.checkpw(input_pw.encode("utf-8"), hash_pw.encode("utf-8")):
         return True
     return False
