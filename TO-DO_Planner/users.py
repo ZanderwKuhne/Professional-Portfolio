@@ -1,6 +1,7 @@
 # This module is used to handle all user related database functions,
 # they are used in the welcome.py module, which houses the apllication logic
 
+import bcrypt
 from db import get_connection
 from datetime import datetime, timezone
 
@@ -10,11 +11,13 @@ def create_user(name: str, password: str):
     conn = get_connection()
     cursor = conn.cursor()
 
+    hashed_pw = pass_hash(password)
+
     cursor.execute(
         """INSERT INTO users (name, pass) VALUES (?, ?)""",
         (
             name,
-            password,
+            hashed_pw,
         ),
     )
     conn.commit()
@@ -83,28 +86,29 @@ def get_user_goal(user_id: int):
     return {"user_id": user_id, "data": [dict(row) for row in rows]}
 
 
-# Verify if the received user information is correct, return data based on verification status
+# Verify if the received user information is correct, compare input password with stored hash password, return data based on verification status
 def verify_user(name: str, password: str):
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT id, name, pass
+        SELECT id, pass
         FROM users
-        WHERE name = ? AND pass = ?
+        WHERE name = ?
         """,
-        (
-            name,
-            password,
-        ),
+        (name,),
     )
 
     row = cursor.fetchone()
     conn.close()
     if not row:
         return {"Verification status": False}
-    return {"Verification status": True, "id": row["id"]}
+
+    stored_hash = row["pass"]
+    if hash_pass_check(stored_hash, password):
+        return {"Verification status": True, "id": row["id"]}
+    return {"Verification status": False}
 
 
 # Function used when registering new user, if the name passed as an argument is already in the database, return False, else return True
@@ -199,3 +203,17 @@ def update_goal(user_id: int, data_id: int):
     conn.close()
 
     return {"message": "Goal successfully updated!"}
+
+
+# Store input password as hashed string using bcrypt
+def pass_hash(password: str):
+    hashed = bcrypt.hashpw(password.encode(
+        "utf-8"), bcrypt.gensalt(14)).decode("utf-8")
+    return hashed
+
+
+# Check if stored hash password matches user input password for verification
+def hash_pass_check(hash_pw: str, input_pw: str):
+    if bcrypt.checkpw(hash_pw.encode("utf-8"), input_pw.encode("utf-8")):
+        return True
+    return False
