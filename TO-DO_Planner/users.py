@@ -1,7 +1,6 @@
 # This module is used to handle all user related database functions,
 # they are used in the welcome.py module, which houses the apllication logic
 
-from fastapi import HTTPException
 from db import get_connection
 from datetime import datetime, timezone
 
@@ -12,8 +11,7 @@ def create_user(name: str, password: str):
     cursor = conn.cursor()
 
     cursor.execute(
-        """INSERT INTO users (name) VALUES (?),
-    INSERT INTO users (pass) VALUES (?)""",
+        """INSERT INTO users (name, pass) VALUES (?, ?)""",
         (
             name,
             password,
@@ -44,7 +42,7 @@ def add_user_goal(
     cursor.execute(
         """
         INSERT INTO goals (user_id, goal, priority, date_added, deadline, min_time, status)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
         (
             user_id,
@@ -106,7 +104,7 @@ def verify_user(name: str, password: str):
     conn.close()
     if not row:
         return {"Verification status": False}
-    return {"Verification status": True, "id": cursor.lastrowid}
+    return {"Verification status": True, "id": row["id"]}
 
 
 # Function used when registering new user, if the name passed as an argument is already in the database, return False, else return True

@@ -22,15 +22,15 @@ def init_db():
     cursor = conn.cursor()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXIST users(
+        CREATE TABLE IF NOT EXISTS users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL UNIQUE,
-            pass TEXT NOT NULL UNIQUE,
+            pass TEXT NOT NULL
         )
     """)
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXIST goals(
+        CREATE TABLE IF NOT EXISTS goals(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             goal TEXT NOT NULL,
@@ -38,7 +38,7 @@ def init_db():
             date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
             deadline DATETIME,
             min_time INTEGER,
-            status TEXT NOT NULL
+            status TEXT NOT NULL,
 
             FOREIGN KEY (user_id)
                 REFERENCES users(id)
