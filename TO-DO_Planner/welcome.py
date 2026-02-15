@@ -10,6 +10,7 @@ from users import (
     add_user_goal,
     delete_goal,
     update_goal,
+    sort_goals,
 )
 from datetime import datetime
 
@@ -133,7 +134,8 @@ def user_page(username: str, user_id: int):
         if not user_goal_data["data"]:
             print(f"\n{user_goal_data['message']}")
         else:
-            for goal_item in user_goal_data["data"]:
+            sorted = sort_goals(user_goal_data["data"])
+            for goal_item in sorted:
                 for key, goal in goal_item.items():
                     print(key + ": " + str(goal))
                 print("\n-------------------------------\n")

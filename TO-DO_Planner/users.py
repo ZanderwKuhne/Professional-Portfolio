@@ -3,7 +3,7 @@
 
 import bcrypt
 from db import get_connection
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 
 # Create the user in the database using sql queries
@@ -71,7 +71,7 @@ def get_user_goal(user_id: int):
 
     cursor.execute(
         """
-        SELECT id, goal, deadline, min_time, status
+        SELECT id, goal, date_added, deadline, priority, min_time, status
         FROM goals
         WHERE user_id = ?
         """,
@@ -84,6 +84,12 @@ def get_user_goal(user_id: int):
     if not rows:
         return {"message": "Looks like you haven't set any goals yet!", "data": []}
     return {"user_id": user_id, "data": [dict(row) for row in rows]}
+
+
+def sort_goals(goal_list: list):
+    initial_sort = sorted(goal_list, key= lambda x: x['priority'])
+    sorted_goals = sorted(initial_sort, key= lambda x: not (datetime.fromisoformat(x['deadline']).replace(tzinfo=timezone.utc) - datetime.now(timezone.utc) <= timedelta(days=x['min_time'] + 1 and x['status'] == "Incomplete")))
+    return sorted_goals
 
 
 # Verify if the received user information is correct, compare input password with stored hash password, return data based on verification status
