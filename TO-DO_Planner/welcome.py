@@ -133,8 +133,10 @@ def user_page(username: str, user_id: int):
         if not user_goal_data["data"]:
             print(f"\n{user_goal_data['message']}")
         else:
-            for goal in user_goal_data["data"]:
-                print(goal)
+            for goal_item in user_goal_data["data"]:
+                for key, goal in goal_item.items():
+                    print(key + ": " + str(goal))
+                print("\n-------------------------------\n")
         choice = input("""
         What would you like to do?
         Add new goal: type 'add'
