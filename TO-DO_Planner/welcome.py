@@ -153,27 +153,30 @@ def user_page(username: str, user_id: int):
                 date_str = input("""
                 When is it due?
                 Input format: YYYY-MM-DD
-                """)
-                priority = int(
-                    input("""
+                """).strip()
+
+                priority = input("""
                 What is the priority level of the goal:
                 1-4 1 being highest priority, 4 being the lowest.
                 Default = 1
-                """)
-                )
-                min_req_time = int(
-                    input("""
+                """).strip()
+
+                min_req_time = input("""
                 What is the minimum required time in days you need to finish this goal?
                 Low priority tasks will be moved to the top of the list if the minimum required time for completion is approaching
                 Default = 7
-                """)
-                )
+                """).strip()
+
                 # convert the string date to a useable date format for storage in the database
                 split_dat = date_str.split("-")
                 duedate = datetime(
                     int(split_dat[0]), int(split_dat[1]), int(split_dat[2])
-                )
-                status = add_user_goal(user_id, goal, duedate, priority, min_req_time)
+                ).date()
+                if not priority:
+                    priority = 1
+                if not min_req_time:
+                    min_req_time = 7
+                status = add_user_goal(user_id, goal, duedate, int(priority), int(min_req_time))
                 input(status["message"] + "\nPress enter to continue")
                 clear_console()
                 continue

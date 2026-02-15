@@ -35,8 +35,8 @@ def init_db():
             user_id INTEGER NOT NULL,
             goal TEXT NOT NULL,
             priority INTEGER NOT NULL,
-            date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-            deadline DATETIME,
+            date_added DATE DEFAULT CURRENT_DATE,
+            deadline DATE,
             min_time INTEGER,
             status TEXT NOT NULL,
 

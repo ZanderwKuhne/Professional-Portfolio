@@ -3,7 +3,7 @@
 
 import bcrypt
 from db import get_connection
-from datetime import datetime, timezone, timedelta
+from datetime import date, timezone, timedelta
 
 
 # Create the user in the database using sql queries
@@ -32,14 +32,14 @@ def create_user(name: str, password: str):
 def add_user_goal(
     user_id: int,
     goal: str,
-    due_date: datetime,
+    due_date: date,
     priority=1,
     min_time=7,
     status="Incomplete",
 ):
     conn = get_connection()
     cursor = conn.cursor()
-    now = datetime.now(timezone.utc)
+    now = date.today()
     deadline = due_date
 
     cursor.execute(
@@ -51,8 +51,8 @@ def add_user_goal(
             user_id,
             goal,
             priority,
-            now.isoformat(),
-            deadline.isoformat(),
+            now,
+            deadline,
             min_time,
             status,
         ),
@@ -88,8 +88,9 @@ def get_user_goal(user_id: int):
 
 def sort_goals(goal_list: list):
     initial_sort = sorted(goal_list, key= lambda x: x['priority'])
-    sorted_goals = sorted(initial_sort, key= lambda x: not (datetime.fromisoformat(x['deadline']).replace(tzinfo=timezone.utc) - datetime.now(timezone.utc) <= timedelta(days=x['min_time'] + 1 and x['status'] == "Incomplete")))
-    return sorted_goals
+    sorted_goals = sorted(initial_sort, key= lambda x: not (date.fromisoformat(x['deadline']) - date.today() <= timedelta(days=x['min_time'] + 1) and x['status'] == "Incomplete"))
+    sort_completed = sorted(sorted_goals, key = lambda x: x['status'] == "Completed")
+    return sort_completed
 
 
 # Verify if the received user information is correct, compare input password with stored hash password, return data based on verification status
