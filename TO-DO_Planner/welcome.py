@@ -11,6 +11,7 @@ from users import (
     delete_goal,
     update_goal,
     sort_goals,
+    valid_date,
 )
 from datetime import datetime
 
@@ -28,26 +29,29 @@ def print_welcome():
     while choosing:
         choice = input("""
         Welcome to your CLI TO-DO manager!
-        Already have a profile? type 'login'
-        New user? type 'register'
-        Leaving? type 'quit'
+        1. Login
+        2. Register
+        3. Quit
         """).lower()
         # I chose to use Enum + match case pairs to clean up the function logic
         match choice:
-            case "login":
+            case "1":
                 choosing = False
                 return login()
-            case "register":
+            case "2":
                 choosing = False
                 return register()
-            case "quit":
+            case "3":
                 choosing = False
+            case _:
+                print("Please enter a valid option")
     return choosing
 
 
 # This is the login page function, users can navigate to hear from the welcome page, and will redirect them to the user page if login is successful
 def login():
     clear_console()
+    (valid_date,)
     auth = False
     while not auth:
         username = input("""
@@ -68,14 +72,14 @@ def login():
             cont_check = input("""
             Username or password incorrect.
             Are you certain you have registered?
-            type 'retry' to try again
-            type 'back' to return to the Welcome menu
+            1. Retry
+            2. Back
             """).lower()
 
             match cont_check:
-                case "retry":
+                case "1":
                     continue
-                case "back":
+                case "2":
                     return "welcome"
                 case _:
                     print("Please enter a valid option")
@@ -99,6 +103,7 @@ def register():
                 continue
             if len(username) < 5 or len(password) < 6:
                 print("Username or password too short")
+                continue
             user_data = create_user(username, password)
             input("""
             User successfully registered!
@@ -108,15 +113,15 @@ def register():
         else:
             print("Username already exists!")
             response = input("""
-            type 'retry' to try a different username
-            type 'back' to return to the Welcome menu
+            1. Retry
+            2. Back
             """).lower()
 
             # If the user typed in a username that already exists, give them the option to leave the registration function to login, or recursively call registration until they succeed
             match response:
-                case "retry":
+                case "1":
                     continue
-                case "back":
+                case "2":
                     return "welcome"
                 case _:
                     print("Please enter a valid option")
@@ -141,14 +146,14 @@ def user_page(username: str, user_id: int):
                 print("\n-------------------------------\n")
         choice = input("""
         What would you like to do?
-        Add new goal: type 'add'
-        Remove goal: type 'remove'
-        Change goal status to Completed: type 'update'
-        Logout: type 'logout'
+        1. Add goal
+        2. Remove goal
+        3. Update goal
+        4. Logout
         """).lower()
 
         match choice:
-            case "add":
+            case "1":
                 goal = input("What is your goal?\n")
                 date_str = input("""
                 When is it due?
@@ -168,31 +173,31 @@ def user_page(username: str, user_id: int):
                 """).strip()
 
                 # convert the string date to a useable date format for storage in the database
-                split_dat = date_str.split("-")
-                duedate = datetime(
-                    int(split_dat[0]), int(split_dat[1]), int(split_dat[2])
-                ).date()
+                duedate = valid_date(date_str)
                 if not priority:
                     priority = 1
                 if not min_req_time:
                     min_req_time = 7
-                status = add_user_goal(user_id, goal, duedate, int(priority), int(min_req_time))
+                status = add_user_goal(
+                    user_id, goal, duedate, int(priority), int(min_req_time)
+                )
                 input(status["message"] + "\nPress enter to continue")
                 clear_console()
                 continue
 
-            case "remove":
+            case "2":
                 if not user_goal_data["data"]:
                     print("Nothing to remove! Add a goal first.")
                     continue
                 else:
-                    id_to_remove = int(input("Type the goal id you want to remove:\n"))
+                    id_to_remove = int(
+                        input("Type the goal id you want to remove:\n"))
                     status = delete_goal(user_id, id_to_remove)
                     print(status["message"] + "\nPress Enter to continue")
                     clear_console()
                     continue
 
-            case "update":
+            case "3":
                 if not user_goal_data["data"]:
                     print("Nothing to update! Add a goal first.")
                     continue
@@ -205,7 +210,7 @@ def user_page(username: str, user_id: int):
                     clear_console()
                     continue
 
-            case "logout":
+            case "4":
                 return "welcome"
 
             case _:

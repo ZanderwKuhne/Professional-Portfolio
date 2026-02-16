@@ -3,7 +3,7 @@
 
 import bcrypt
 from db import get_connection
-from datetime import date, timezone, timedelta
+from datetime import date, datetime, timedelta
 
 
 # Create the user in the database using sql queries
@@ -87,9 +87,16 @@ def get_user_goal(user_id: int):
 
 
 def sort_goals(goal_list: list):
-    initial_sort = sorted(goal_list, key= lambda x: x['priority'])
-    sorted_goals = sorted(initial_sort, key= lambda x: not (date.fromisoformat(x['deadline']) - date.today() <= timedelta(days=x['min_time'] + 1) and x['status'] == "Incomplete"))
-    sort_completed = sorted(sorted_goals, key = lambda x: x['status'] == "Completed")
+    initial_sort = sorted(goal_list, key=lambda x: x["priority"])
+    sorted_goals = sorted(
+        initial_sort,
+        key=lambda x: not (
+            date.fromisoformat(x["deadline"]) - date.today()
+            <= timedelta(days=x["min_time"] + 1)
+            and x["status"] == "Incomplete"
+        ),
+    )
+    sort_completed = sorted(sorted_goals, key=lambda x: x["status"] == "Completed")
     return sort_completed
 
 
@@ -210,6 +217,16 @@ def update_goal(user_id: int, data_id: int):
     conn.close()
 
     return {"message": "Goal successfully updated!"}
+
+
+# Ensure entered date is a valid format
+def valid_date(date_string, default_date=date.today()):
+    try:
+        check_date = datetime.strptime(date_string, "%Y-%m-%d")
+        return check_date.date()
+    except ValueError as e:
+        print(f"{e}: {date_string} Using default")
+        return default_date
 
 
 # Store input password as hashed string using bcrypt
