@@ -38,6 +38,7 @@ I am proficient with the editor, and enjoy the tools it provides to:
 .git management:
 
  -Lazigit
+ -git cli
 
 Database management:
 
@@ -47,6 +48,8 @@ Database management:
 Language List:
 
  -Python
+ -Assembly
+ -C
  -JavaScript
  -HTML
  -css
@@ -64,5 +67,11 @@ A CLI application with the aim of setting up and tracking user defined goals, as
 deadlines. This project aims to demonstrate basic CRUD application understanding, along with basic database management functionality to maintain
 persistence between different users. Basic encryption is also used for user verification and login management.
 
+Ass-C-kernel
 
+A personal project for building a bare metal kernel and shell for a Raspberry pi 3. The end goal is to build drivers for input and output, as well as eventually porting Doom (1993) onto this. This is to showcase understanding of low level and systems development.
+
+PT-Chess
+
+Chess in running in the terminal, coded in python. A project to focus on effective use of functional and object oriented programming design philosophies. I chose chess because I have a decent understanding of it, and it is one of my hobbies.
 
