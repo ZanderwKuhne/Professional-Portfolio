@@ -1,0 +1,192 @@
+[
+  {
+    "file": "source/gpio.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/gpio.c",
+      "-o",
+      "build/gpio_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/gpio_c.o"
+  },
+  {
+    "file": "source/irq.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/irq.c",
+      "-o",
+      "build/irq_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/irq_c.o"
+  },
+  {
+    "file": "source/kernel.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/kernel.c",
+      "-o",
+      "build/kernel_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/kernel_c.o"
+  },
+  {
+    "file": "source/mini_uart.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/mini_uart.c",
+      "-o",
+      "build/mini_uart_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/mini_uart_c.o"
+  },
+  {
+    "file": "source/shell.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/shell.c",
+      "-o",
+      "build/shell_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/shell_c.o"
+  },
+  {
+    "file": "source/utils.c",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/utils.c",
+      "-o",
+      "build/utils_c.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/utils_c.o"
+  },
+  {
+    "file": "source/boot.S",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/boot.S",
+      "-o",
+      "build/boot_s.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/boot_s.o"
+  },
+  {
+    "file": "source/irq.S",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/irq.S",
+      "-o",
+      "build/irq_s.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/irq_s.o"
+  },
+  {
+    "file": "source/mm.S",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/mm.S",
+      "-o",
+      "build/mm_s.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/mm_s.o"
+  },
+  {
+    "file": "source/utils.S",
+    "arguments": [
+      "aarch64-linux-gnu-gcc",
+      "-DRPI_VERSION=3",
+      "-Wall",
+      "-ffreestanding",
+      "-Iinclude",
+      "-mgeneral-regs-only",
+      "-mcpu=cortex-a53+nosimd",
+      "-MMD",
+      "-c",
+      "source/utils.S",
+      "-o",
+      "build/utils_s.o"
+    ],
+    "directory": "/home/zander/Work/Ass-C-Kernel",
+    "output": "build/utils_s.o"
+  }
+]

@@ -1,0 +1,17 @@
+[[project]]
+path = ""
+version = "0.10.1"
+assembler = "gas"
+instruction_set = "arm64"
+
+[project.opts]
+compiler = "aarch64-linux-gnu-gcc"
+compile_flags_txt = [
+    "-march=armv8-a",
+    "-mtune=cortex-a53",
+    "-nostdlib",
+    "-ffreestanding",
+    "-mgeneral-regs-only",
+]
+diagnostics = true
+default_diagnostics = false

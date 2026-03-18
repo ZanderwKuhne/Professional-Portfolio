@@ -1,0 +1,4 @@
+Metadata-Version: 2.4
+Name: PT-Chess
+Version: 0.1.0
+Requires-Dist: pygame>=2.6.1

@@ -1,0 +1,6 @@
+pyproject.toml
+PT_Chess.egg-info/PKG-INFO
+PT_Chess.egg-info/SOURCES.txt
+PT_Chess.egg-info/dependency_links.txt
+PT_Chess.egg-info/requires.txt
+PT_Chess.egg-info/top_level.txt
